@@ -12,7 +12,7 @@ const client = createAdminApiClient({
 
 const [user, pass] = process.env.OUTLOOK_AUTH.split(':')
 const transport = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com",
+  host: 'smtp-mail.outlook.com',
   port: 587,
   tls: {
     ciphers: 'SSLv3',
@@ -53,6 +53,8 @@ export default async (req, res) => {
   })
 
   if (!email.messageId) {
+    console.log('Error sending email: ', JSON.stringify(email, null, ' '))
+
     return await transport.sendMail({
       from: 'info@momentus.shop',
       to: 'info@momentus.shop',
@@ -60,7 +62,7 @@ export default async (req, res) => {
     })
   }
 
-  console.log("Message sent: ", email.messageId)
+  console.log('Email sent: ', email.messageId)
 
   const operation = `
     mutation OrderUpdate($input: OrderInput!) {
@@ -82,7 +84,7 @@ export default async (req, res) => {
   })
 
   if (data?.userErrors || errors) {
-    console.log("GraphQL errors: ", data?.userErrors, errors)
+    console.log('GraphQL errors: ', data?.userErrors, errors)
 
     return await transport.sendMail({
       from: 'info@momentus.shop',
