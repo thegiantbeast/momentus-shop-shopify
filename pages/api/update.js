@@ -33,9 +33,10 @@ export default async (req, res) => {
 
   console.log(`Send ${name} email to ${contact_email} (${country_code} :: ${tags}) with ${note_attributes?.[0]?.value}`)
 
+  const isDebug = process.env.APP_DEBUG === 'true'
   const email = await transport.sendMail({
     from: '"Momentus Shop" <info@momentus.shop>',
-    to: 'ricardo.ferreira@wizardformula.pt', //contact_email,
+    to: isDebug ? 'ricardo.ferreira@wizardformula.pt' : contact_email,
     bcc: 'info@momentus.shop',
     subject: `${emailTemplates[lang].subject} ${name}`,
     text: emailTemplates[lang].text,
