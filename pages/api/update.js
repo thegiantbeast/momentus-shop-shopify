@@ -62,7 +62,7 @@ export default async (req, res) => {
     return res.status(200).send('Ok')
   }
 
-  console.log('Email sent: ', email.messageId)
+  console.log(`Email sent: ${email.messageId}`)
 
   const operation = `
     mutation OrderUpdate($input: OrderInput!) {
@@ -94,6 +94,8 @@ export default async (req, res) => {
 
     return res.status(200).send('Ok')
   }
+
+  console.log('Shopify tags updated')
 
   res.status(200).send('Ok')
 }
