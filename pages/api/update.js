@@ -75,7 +75,7 @@ export default async (req, res) => {
     variables: {
       input: {
         id: admin_graphql_api_id,
-        tags: [...tags, 'Entregue']
+        tags: `${tags}, Entregue`
       }
     }
   })
