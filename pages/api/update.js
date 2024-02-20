@@ -29,7 +29,7 @@ export default async (req, res) => {
   console.log(`Received hook for ${name}`);
 
   // no attachment, nothing to process at this point
-  if (!note_attributes?.[0]?.value || tags.includes('Entregue')) return
+  if (!note_attributes?.[0]?.value || tags.includes('Entregue')) return res.status(200).send('Ok')
 
   console.log(`Send ${name} email to ${contact_email} (${country_code} :: ${tags}) with ${note_attributes?.[0]?.value}`)
 
@@ -52,11 +52,13 @@ export default async (req, res) => {
   if (!email.messageId) {
     console.log('Error sending email: ', JSON.stringify(email, null, ' '))
 
-    return await transport.sendMail({
+    await transport.sendMail({
       from: 'info@momentus.shop',
       to: 'info@momentus.shop',
       subject: `Houve um erro no email de ${name}`
     })
+
+    return res.status(200).send('Ok')
   }
 
   console.log('Email sent: ', email.messageId)
@@ -83,11 +85,13 @@ export default async (req, res) => {
   if (data?.userErrors || errors) {
     console.log('GraphQL errors: ', data?.userErrors, errors)
 
-    return await transport.sendMail({
+    await transport.sendMail({
       from: 'info@momentus.shop',
       to: 'info@momentus.shop',
       subject: `Houve um erro ao actualizar a tag de ${name}`
     })
+
+    return res.status(200).send('Ok')
   }
 
   res.status(200).send('Ok')
