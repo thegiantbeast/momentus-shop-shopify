@@ -26,9 +26,6 @@ export default async (req, res) => {
   const { admin_graphql_api_id, contact_email, name, note_attributes, tags, billing_address: { country_code } } = JSON.parse(body)
   const lang = country_code === 'PT' ? 'pt' : 'en'
 
-  // responde immediately, no need to wait
-  res.status(200).send('Ok')
-
   console.log(`Received hook for ${name}`);
 
   // no attachment, nothing to process at this point
@@ -92,6 +89,8 @@ export default async (req, res) => {
       subject: `Houve um erro ao actualizar a tag de ${name}`
     })
   }
+
+  res.status(200).send('Ok')
 }
 
 export const config = {
