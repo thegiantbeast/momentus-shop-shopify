@@ -23,15 +23,21 @@ const transport = nodemailer.createTransport({
 
 export default async (req, res) => {
   const body = (await buffer(req)).toString()
-  const { admin_graphql_api_id, contact_email, name, note_attributes, tags, billing_address: { country_code } } = JSON.parse(body)
-  const lang = country_code === 'PT' ? 'pt' : 'en'
+
+  const { admin_graphql_api_id, contact_email, name, note_attributes, tags, customer_locale, financial_status } = JSON.parse(body)
+  const lang = customer_locale.endsWith('-PT') ? 'pt' : 'en'
 
   console.log(`Received hook for ${name}`);
 
-  // no attachment, nothing to process at this point
-  if (!note_attributes?.[0]?.value || tags.includes('Entregue')) return res.status(200).send('Ok')
+  // nothing to process when:
+  // - no attachment
+  // - email already sent
+  // - not yet paid
+  if (!note_attributes?.[0]?.value || tags.includes('Entregue') || financial_status !== 'paid') return res.status(200).send('Ok')
 
-  console.log(`Send ${name} email to ${contact_email} (${country_code} :: ${tags}) with ${note_attributes?.[0]?.value}`)
+  // console.log(JSON.stringify(JSON.parse(body), null, ' '))
+
+  console.log(`Send ${name} email to ${contact_email} (${customer_locale} :: ${tags}) with ${note_attributes?.[0]?.value}`)
 
   const isDebug = process.env.APP_DEBUG === 'true'
   const email = await transport.sendMail({
