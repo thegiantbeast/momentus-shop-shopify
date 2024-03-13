@@ -1,0 +1,12 @@
+{
+    "crons": [
+      {
+        "path": "/api/late-notification-scheduler",
+        "schedule": "0 12 * * *"
+      },
+      {
+        "path": "/api/late-notification-scheduler",
+        "schedule": "0 19 * * *"
+      }
+    ]
+  }
