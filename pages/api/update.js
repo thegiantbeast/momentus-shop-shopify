@@ -19,10 +19,10 @@ const transport = nodemailer.createTransport(JSON.parse(process.env.SMTP_CONNECT
 export default async (req, res) => {
   const body = (await buffer(req)).toString()
   const { admin_graphql_api_id: order_gid, contact_email, name: order_number, note_attributes, tags, customer_locale, financial_status } = JSON.parse(body)
-  const lang = customer_locale.endsWith('-PT') ? 'pt' : 'en'
+  const lang = customer_locale === 'pt-PT' ? 'pt' : 'en'
   const currentTags = tags.split(', ')
 
-  console.log(`Received hook for ${order_number}`);
+  console.log(`Received hook for ${order_number}`)
 
   // add notification and timer (now + 15min) tags when is paid but no file attached
   if (!note_attributes?.[0]?.value && financial_status === 'paid' && !currentTags.includes('notification')) {
