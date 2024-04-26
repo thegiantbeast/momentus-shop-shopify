@@ -454,7 +454,7 @@ pje96U1v3P87+z/201qU2j+lHAAAAABJRU5ErkJggg=            `
 export const en = {
     subject: '[Momentus] - Digital File -',
     text: `
-The design of your frame is ready!
+Your artwork is ready!
 
 
 Please find your digital file in the attachments of this email.
@@ -551,7 +551,7 @@ div.WordSection1
 </tr>
 <tr style="height:13.95pt">
 <td valign="bottom" style="padding:0;height:13.95pt">
-<p class="xxmsonormal" align="center" style="margin:0cm;text-align:center"><span lang="PT" style="font-size:18.0pt;font-family:Helvetica;color:#1B1B1B">The design of your frame is ready!</span></p>
+<p class="xxmsonormal" align="center" style="margin:0cm;text-align:center"><span lang="PT" style="font-size:18.0pt;font-family:Helvetica;color:#1B1B1B">Your artwork is ready!</span></p>
 <p class="xxmsonormal" align="center" style="margin:0cm;text-align:center"><span lang="PT" style="font-size:15.0pt;font-family:Helvetica;color:#1B1B1B">&nbsp;</span></p>
 <p class="xxmsonormal" align="center" style="margin:0cm;text-align:center"><span lang="PT" style="font-family:Helvetica;color:#1B1B1B">Please find your digital file in the attachments of this email.</span></p>
 </td>
