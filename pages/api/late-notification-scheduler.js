@@ -12,16 +12,7 @@ const client = createAdminApiClient({
   accessToken
 })
 
-const [user, pass] = process.env.SMTP_AUTH.split(':')
-const transport = nodemailer.createTransport({
-  host: 'smtp-mail.outlook.com',
-  port: 587,
-  tls: {
-    ciphers: 'SSLv3',
-    rejectUnauthorized: false
-  },
-  auth: { user, pass }
-})
+const transport = nodemailer.createTransport(JSON.parse(process.env.SMTP_CONNECTION))
 
 export default async (req, res) => {
   const authHeader = req.headers['authorization']
