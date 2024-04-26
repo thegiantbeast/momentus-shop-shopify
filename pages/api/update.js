@@ -14,7 +14,7 @@ const client = createAdminApiClient({
   accessToken
 })
 
-const [user, pass] = process.env.OUTLOOK_AUTH.split(':')
+const [user, pass] = process.env.SMTP_AUTH.split(':')
 const transport = nodemailer.createTransport({
   host: 'smtp-mail.outlook.com',
   port: 587,
