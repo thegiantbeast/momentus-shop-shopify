@@ -31,10 +31,15 @@ export default async (req, res) => {
     const nextTags = [...currentTags, 'notification', `timer:${timer}`]
     const orderUpdate = `
       mutation OrderUpdate($input: OrderInput!) {
-        orderUpdate(input: $input)
+        orderUpdate(input: $input) {
+          userErrors {
+            field
+            message
+          }
+        }
       }
     `
-    const { errors } = await client.request(orderUpdate, {
+    const { data, errors } = await client.request(orderUpdate, {
       variables: {
         input: {
           id: order_gid,
@@ -48,7 +53,7 @@ export default async (req, res) => {
         from: fromEmail,
         to: toEmail,
         subject: `[ALERTA] Order ${order_number}: Falhou ao definir notificação`,
-        text: JSON.stringify(errors, null, ' ')
+        text: JSON.stringify({ data, errors }, null, ' ')
       })
     }
   }
