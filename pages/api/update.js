@@ -71,7 +71,9 @@ export default async (req, res) => {
   const subject = `${emailTemplates[lang].subject} ${order_number} ${isDebug ? `(to: ${contact_email})` : ''}`.trimEnd()
 
   for(const [index, img] of note_attributes.entries()) {
-    const emailParts = note_attributes.length === 1 ? '' : `${index + 1}/${note_attributes.length}`
+    const emailParts = note_attributes.length === 1 ? '' : `(${index + 1}/${note_attributes.length})`
+    const fileParts = note_attributes.length === 1 ? '' : `_${index + 1}`;
+
     const email = await transport.sendMail({
       from: fromEmail,
       to: to,
@@ -82,7 +84,7 @@ export default async (req, res) => {
       attachments: [
         ...emailTemplates[lang].attachments,
         {
-          filename: `${order_number}.png`,
+          filename: `${order_number}${fileParts}.png`,
           path: img.value
         }
       ]
