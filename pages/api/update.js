@@ -99,9 +99,9 @@ export default async (req, res) => {
   
       return res.status(200).send('Ok')
     }
+    
+    console.log(`Email sent: ${email.messageId}`)
   }
-
-  console.log(`Email sent: ${email.messageId}`)
 
   const getOrderOperation = `
     query GetOrder($id: ID!) {
