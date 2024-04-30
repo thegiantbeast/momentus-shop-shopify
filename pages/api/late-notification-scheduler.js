@@ -30,6 +30,7 @@ export default async (req, res) => {
           id
           name
           tags
+          fullyPaid
         }
       }
     }
@@ -44,7 +45,7 @@ export default async (req, res) => {
   // - send email
   // - add 'notified' tag
   for (const order of nodes) {
-    if (order.tags.includes('notified')) continue
+    if (order.tags.includes('notified') || !order.fullyPaid) continue
 
     const shouldSendEmail = order.tags.some((tag) => {
       if (tag.startsWith('timer:')) {
