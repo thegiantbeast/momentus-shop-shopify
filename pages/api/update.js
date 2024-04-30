@@ -69,32 +69,36 @@ export default async (req, res) => {
   const to = isDebug ? toEmail : contact_email
   const bcc = !isDebug ? toEmail : undefined
   const subject = `${emailTemplates[lang].subject} ${order_number} ${isDebug ? `(to: ${contact_email})` : ''}`.trimEnd()
-  const email = await transport.sendMail({
-    from: fromEmail,
-    to: to,
-    bcc: bcc,
-    subject: subject,
-    text: emailTemplates[lang].text,
-    html: emailTemplates[lang].html,
-    attachments: [
-      ...emailTemplates[lang].attachments,
-      {
-        filename: `${order_number}.png`,
-        path: note_attributes?.[0]?.value
-      }
-    ]
-  })
 
-  if (!email.messageId) {
-    console.log('Error sending email: ', JSON.stringify(email, null, ' '))
-
-    await transport.sendMail({
+  for(const [index, img] of note_attributes.entries()) {
+    const emailParts = note_attributes.length === 1 ? '' : `${index + 1}/${note_attributes.length}`
+    const email = await transport.sendMail({
       from: fromEmail,
-      to: toEmail,
-      subject: `[ALERTA] Order ${order_number}: Houve um erro no envio do email`
+      to: to,
+      bcc: bcc,
+      subject: `${subject} ${emailParts}`,
+      text: emailTemplates[lang].text,
+      html: emailTemplates[lang].html,
+      attachments: [
+        ...emailTemplates[lang].attachments,
+        {
+          filename: `${order_number}.png`,
+          path: img.value
+        }
+      ]
     })
-
-    return res.status(200).send('Ok')
+    
+    if (!email.messageId) {
+      console.log('Error sending email: ', JSON.stringify(email, null, ' '))
+  
+      await transport.sendMail({
+        from: fromEmail,
+        to: toEmail,
+        subject: `[ALERTA] Order ${order_number}: Houve um erro no envio do email`
+      })
+  
+      return res.status(200).send('Ok')
+    }
   }
 
   console.log(`Email sent: ${email.messageId}`)
