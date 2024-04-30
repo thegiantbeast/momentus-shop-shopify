@@ -45,8 +45,6 @@ export default async (req, res) => {
   // - send email
   // - add 'notified' tag
   for (const order of nodes) {
-    if (order.tags.includes('notified') || !order.fullyPaid) continue
-
     const shouldSendEmail = order.tags.some((tag) => {
       if (tag.startsWith('timer:')) {
         const [,timer] = tag.split(':')
@@ -57,7 +55,7 @@ export default async (req, res) => {
       return false
     })
 
-    if (!shouldSendEmail) continue
+    if (order.tags.includes('notified') || !order.fullyPaid || !shouldSendEmail) continue
 
     await transport.sendMail({
       from: fromEmail,
