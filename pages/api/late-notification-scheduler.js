@@ -57,13 +57,13 @@ export default async (req, res) => {
       return false
     })
 
-    if (shouldSendEmail) {
-      await transport.sendMail({
-        from: fromEmail,
-        to: toEmail,
-        subject: `[ALERTA] Order ${order.name}: Continua sem ficheiro anexo`
-      })
-    }
+    if (!shouldSendEmail) continue
+
+    await transport.sendMail({
+      from: fromEmail,
+      to: toEmail,
+      subject: `[ALERTA] Order ${order.name}: Continua sem ficheiro anexo`
+    })
 
     const nextTags = [...order.tags, 'notified']
     const orderUpdateOperation = `
