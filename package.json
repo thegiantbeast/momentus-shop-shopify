@@ -1,7 +1,7 @@
 {
-  "name": "shopify-send-teeinblue-emails",
+  "name": "momentus-shop-shopify",
   "version": "1.0.0",
-  "description": "Send Teeinblue Emails (Shopify)",
+  "description": "Momentus Shop - Shopify",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thegiantbeast/shopify-send-teeinblue-emails.git"
+    "url": "git+https://github.com/thegiantbeast/momentus-shop-shopify.git"
   },
   "author": "Ricardo Ferreira",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thegiantbeast/shopify-send-teeinblue-emails/issues"
+    "url": "https://github.com/thegiantbeast/momentus-shop-shopify/issues"
   },
-  "homepage": "https://github.com/thegiantbeast/shopify-send-teeinblue-emails#readme",
+  "homepage": "https://github.com/thegiantbeast/momentus-shop-shopify#readme",
   "dependencies": {
     "@shopify/shopify-api": "^9.3.1",
     "micro": "^10.0.1",
